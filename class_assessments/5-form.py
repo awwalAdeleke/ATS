@@ -1,0 +1,15 @@
+name = input("What is your name? (First name first) ").split(" ")
+age = input("How old are you? ")
+place = input("Where did you have your last vacation? ").title()
+time = input("What year did you go there? ")
+height = input("How tall are you? in cm ")
+hobbies = input("What are your hobbies? ").title()
+skin = input("What is your complexion? ").lower()
+best_friend = input("Who is your best friend? ").title()
+siblings = input("How many siblings do you have? ")
+consent = input("Do you want a comprehensive essay about you? Y or N ")
+if consent.lower() == "y":
+    print("Your essay will be printed shortly...")
+    print(f"My name is {name[0].title()}. My last name is {name[1].title()}. I am {age} years old. I am {height}cm tall. I am {skin} in complexion. I love {hobbies}. My best friend is {best_friend} and I have {siblings} siblings. I went to {place} for vacation in {time}.\n\nGood day!")
+else:
+    print("Thank you for submitting your details with you. Good day!")
