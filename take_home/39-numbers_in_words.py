@@ -23,24 +23,39 @@ def numbers_in_words(num:int):
         print("{}-{}".format(fixed_numbers[tens * 10].title(), fixed_numbers[units]))
     elif len(str(num)) == 3:
         if hundreds >= 1:
-            if tens >= 1 and units > 0:
+            if tens == 1 and units > 0:
+                print("{} hundred and {}".format(fixed_numbers[hundreds].title(), fixed_numbers[tens * 10 + units]))
+            elif tens >= 2 and units > 0:
                 print("{} hundred and {}-{}".format(fixed_numbers[hundreds].title(), fixed_numbers[tens * 10], fixed_numbers[units]))
-            elif tens == 0 and units > 0:
+            elif tens == 0 and units >= 0:
                 print("{} hundred and {}".format(fixed_numbers[hundreds].title(), fixed_numbers[units]))
+            elif tens >= 1 and units == 0:
+                print("{} hundred and {}".format(fixed_numbers[hundreds].title(), fixed_numbers[tens * 10]))
             elif tens == 0 and units == 0:
                 print("{} hundred".format(fixed_numbers[hundreds].title()))
     elif len(str(num)) == 4:
         if thousands >= 1:
-            if hundreds >= 1 and units > 0:
-                if tens >= 1:
+            if hundreds >= 1:
+                if tens == 1 and units > 0:
+                    print("{} thousand, {} hundred and {}".format(fixed_numbers[thousands].title(), fixed_numbers[hundreds], fixed_numbers[tens * 10 + units]))
+                if tens >= 2 and units > 0:
                     print("{} thousand, {} hundred and {}-{}".format(fixed_numbers[thousands].title(), fixed_numbers[hundreds], fixed_numbers[tens * 10], fixed_numbers[units]))
-                elif tens == 0:
+                elif tens >= 2 and units == 0:
+                    print("{} thousand, {} hundred and {}".format(fixed_numbers[thousands].title(), fixed_numbers[hundreds], fixed_numbers[tens * 10]))
+                elif tens == 0 and units > 0:
                     print("{} thousand, {} hundred and {}".format(fixed_numbers[thousands].title(), fixed_numbers[hundreds], fixed_numbers[units]))
-                
+                elif tens == 0 and units == 0:
+                    print("{} thousand, {} hundred".format(fixed_numbers[thousands].title(), fixed_numbers[hundreds]))
             else:
-                if tens >= 1 and units == 0:
+                if tens == 1 and units > 0:
+                    print("{} thousand and {}".format(fixed_numbers[thousands].title(), fixed_numbers[tens * 10 + units]))
+                if tens >= 2 and units > 0:
+                    print("{} thousand and {}-{}".format(fixed_numbers[thousands].title(), fixed_numbers[tens * 10], fixed_numbers[units]))
+                elif tens >= 2 and units == 0:
                     print("{} thousand and {}".format(fixed_numbers[thousands].title(), fixed_numbers[tens * 10]))
+                elif tens == 0 and units > 0:
+                    print("{} thousand and {}".format(fixed_numbers[thousands].title(), fixed_numbers[units]))
                 elif tens == 0 and units == 0:
                     print("{} thousand".format(fixed_numbers[thousands].title()))
 
-numbers_in_words(500)
+numbers_in_words(914)
