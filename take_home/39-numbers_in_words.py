@@ -58,4 +58,4 @@ def numbers_in_words(num:int):
                 elif tens == 0 and units == 0:
                     print("{} thousand".format(fixed_numbers[thousands].title()))
 
-numbers_in_words(914)
+numbers_in_words(900)
