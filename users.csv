@@ -1,2 +1,6 @@
-First_name,Last_name,Username,Password
-Awwal,Adeleke,sdejfkjd,yyfcrre
+First_name,Last_name,Username,Password,Phone_number,Address,Date_of_birth,Gender
+
+Awwal,Adeleke,Yomifemi,adewale2,09087654323,"2, Adekoko Street, Obanikoko",24-08-1993,Male
+
+Sulaiman,Adeyanju,Suleyan2,adeyanj2
+
