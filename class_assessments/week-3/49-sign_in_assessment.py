@@ -27,9 +27,7 @@ def confirm(username, password):
     return False
 
 def check_length(args, num=8):
-    if len(args) == num:
-        return True
-    return False
+    return len(args) == num
 
 def get_data():
     with open(r'C:\Users\AwwalOlamideAdeleke\Desktop\python-afex\users.csv', 'r') as file:
@@ -123,10 +121,11 @@ def edit_profile(username):
     print("Edit is complete!")
 
 def change_password(username):
+    data = get_data()
     updated_list = []
     old_password = input("Enter your old password:\n")
     for i in data:
-        if confirm(username, old_password):
+        if username == i["Username"] and old_password == i["Password"]:
             new_password = input("Enter your new password:\n")
             password2 = input("Please confirm your new password:\n")
             if confirm_password(new_password, password2) == True:
