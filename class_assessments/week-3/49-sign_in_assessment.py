@@ -9,10 +9,10 @@ def enter_l_name():
     return input("Enter your last name:\n")
 
 def enter_u_name():
-    return input("Enter your username(Length must be 8, it must include at least one number):\n")
+    return input("Enter your username(Length must be 8):\n")
 
 def enter_password():
-    return input("Enter your password(Length must be 8 and it must contain at least one number and a special character):\n")
+    return input("Enter your password(Length must be 8):\n")
 
 def confirm_password(password, password_input):
     if password_input == password:
@@ -51,9 +51,9 @@ def sign_up():
         u_name = input("Invalid username, one more attempt(s) left. Try again.\n")
 
     password = enter_password()
-    if any(item in password for item in (upper_letters + lower_letters)) == False and any(item in password for item in (numbers + special_char)) == False and len(password) != 8:
+    if len(password) < 8:
         print("The password you entered does not meet the requirements. Try again")
-        password = input("One more attempt(s) left. Re-enter your password(Length must be 8 and it must contain at least one number or a special character): \n")
+        password = input("One more attempt(s) left. Re-enter your password(Length must be 8): \n")
 
     def save_details():
         with open(r"C:\Users\AwwalOlamideAdeleke\Desktop\python-afex\users.csv", "a") as file:
@@ -85,16 +85,12 @@ def sign_in():
         if response == 1:
             edit_profile(u_name)
         elif response == 2:
-            old_password = input("Enter your old password:\n")
-            new_password = input("Enter your new password:\n")
-            password2 = input("Please confirm your new password:\n")
-            if confirm_password(new_password, password2) != True:
-                return "The passwords did not match!"
-            print(change_password(old_password, new_password))
+            change_password(u_name)
         elif response == 3:
             sys.exit()
-    else:
-        return "Invalid log in details."
+        else:
+            print("Invalid log in details.")
+            return sign_in()
 
 
 def entry():
@@ -108,26 +104,47 @@ def entry():
 
 def edit_profile(username):
     data = get_data()
+    updated_list = []
     for i in data:
         if username == i['Username']:
-            phone_no = input("Please add your mobile number, preferably with Nigerian callcodes: ")
-            address = input("Enter your address: ")
-            dob = input("Enter your date of birth in this format: ")
-            gender = input("Enter your gender: ")
-            with open(r'C:\Users\AwwalOlamideAdeleke\Desktop\python-afex\users.csv', 'w+') as file:
-                header = ["First_name", "Last_name", "Username", "Password", "Phone_number", "Address", "Date_of_birth", "Gender"]
-                handler = csv.DictWriter(file ,fieldnames=header)
-                handler.writeheader()
-                handler.writerow({"First_name": i["First_name"], "Last_name": i["Last_name"], "Username": i["Username"], "Password": i["Password"], "Phone_number": phone_no, "Address": address , "Date_of_birth": dob, "Gender": gender})
-    return "Edit is complete!"
+            i["Phone_number"] = input("Please add your mobile number, preferably with Nigerian callcodes: ")
+            i["Address"] = input("Enter your address: ")
+            i["Date_of_birth"] = input("Enter your date of birth in this format: ")
+            i["Gender"] = input("Enter your gender: ")
+        
+        updated_list.append(i)
 
-def change_password(old_password, new_password):
-    data = get_data()
+    for data in updated_list:
+        with open(r'C:\Users\AwwalOlamideAdeleke\Desktop\python-afex\users.csv', 'w') as file:
+            header = ["First_name", "Last_name", "Username", "Password", "Phone_number", "Address", "Date_of_birth", "Gender"]
+            handler = csv.DictWriter(file ,fieldnames=header)
+            handler.writeheader()
+            handler.writerows(updated_list)
+    print("Edit is complete!")
+
+def change_password(username):
+    updated_list = []
+    old_password = input("Enter your old password:\n")
     for i in data:
-        if old_password in i['Password']:
-            i["Password"] = new_password
-        else:
-            return "Password is incorrect!"
+        if confirm(username, old_password):
+            new_password = input("Enter your new password:\n")
+            password2 = input("Please confirm your new password:\n")
+            if confirm_password(new_password, password2) == True:
+                i["Password"] = new_password
+                print("Password successfully changed!")
+            else:
+                return "The passwords do not match!"
+        updated_list.append(i)
+
+
+
+    for data in updated_list:
+        with open(r'C:\Users\AwwalOlamideAdeleke\Desktop\python-afex\users.csv', 'w') as file:
+            header = ["First_name", "Last_name", "Username", "Password", "Phone_number", "Address", "Date_of_birth", "Gender"]
+            handler = csv.DictWriter(file ,fieldnames=header)
+            handler.writeheader()
+            handler.writerows(updated_list)
+
 
 
 if __name__ == '__main__':

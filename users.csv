@@ -1,6 +1,4 @@
-First_name,Last_name,Username,Password,Phone_number,Address,Date_of_birth,Gender
-
-Awwal,Adeleke,Yomifemi,adewale2,09087654323,"2, Adekoko Street, Obanikoko",24-08-1993,Male
-
-Sulaiman,Adeyanju,Suleyan2,adeyanj2
-
+First_name,Last_name,Username,Password,Phone_number,Address,Date_of_birth,Gender
+Sulaiman,Adeyanju,Suleyan2,adeyanj2,07034562764,"5, Ijebu-igbo Street, Jericho",23-04-2003,Male
+Awwal,Adeleke,awwal231,password13,09023459867,"7, Dimeji Street, Ijebu",23-09-2007,Male
+Olamide,Adeyanju,ademide2,password,09034125672,"9, Temilola Street, Nairobi",20-12-2009,Male
