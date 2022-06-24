@@ -13,7 +13,7 @@ def game():
             return f"{num} is the correct number!"
         print("Wrong!")
         i += 1
-    return "You lose! The correct number is {correct_num}"
+    return f"You lose! The correct number is {correct_num}"
 
 
 if __name__ == '__main__':
