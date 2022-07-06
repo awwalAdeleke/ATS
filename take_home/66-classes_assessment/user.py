@@ -12,24 +12,24 @@ class User(Wallet):
         User.all.append(self)
 
     def __eq__(self, other):
-        return self._id == other._id and self.__pin == other.__pin
+        return self.__id == other.__id and self.__pin == other.__pin
 
-    def __repr__(self) -> str:
-        return f"{self.__class__.__name__}('{self.__f_name}', '{self.__l_name}', '{self._wallet_balance}', '{self._id}', '{self.__pin}')"
+    # def __repr__(self) -> str:
+    #     return f"{self.__class__.__name__}('{self.__f_name}', '{self.__l_name}', '{self._wallet_balance}', '{self.__id}', '{self.__pin}')"
 
     @property
     # Property Decorator = Read-Only Attribute
     def id(self):
-        return self._id
+        return self.__id
 
     @id.setter
-    def id(self, value):
+    def set_id(self, value):
         if len(value) > 10:
             raise Exception("The ID is too long!")
-        if self._id == value:
+        if self.__id == value:
             raise Exception("The ID is the same as before!")
         print("ID has been set!")
-        self._id = value
+        self.__id = value
 
     @property
     # Property Decorator = Read-Only Attribute
@@ -37,7 +37,7 @@ class User(Wallet):
         return self.__pin
 
     @pin.setter
-    def pin(self, value):
+    def set_pin(self, value):
         if self.__pin == value:
             raise Exception("The password is the same as before!")
         print("Pin has been set!")
