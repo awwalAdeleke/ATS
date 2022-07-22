@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+
+ul{
+    display: grid;
+    row-gap: 30px;
+}
+
+
+li{
+    border: 1px solid black;
+    width: max-content;
+    list-style: none;
+    background-color: aquamarine;
+}
+
+li a{
+    color: green;
+    text-decoration: none;
+}
+
+body{
+    background: white url("images/images.jpg") no-repeat;
+    background-size: cover;
+}
