@@ -1,0 +1,7 @@
+.vscode
+Include/
+Lib/
+Scripts/
+*.cfg
+__pycache__
+__init__.py

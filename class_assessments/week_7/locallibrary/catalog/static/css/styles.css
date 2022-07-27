@@ -1,0 +1,22 @@
+.sidebar-nav {
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
+}
+
+.col-sm-10 {
+    margin-top: 20px;
+}
+
+a{
+    text-decoration: none;
+}
+
+ul{
+    padding-inline-start: 0px;
+}
+
+li{
+    list-style-type: none;
+}
+
