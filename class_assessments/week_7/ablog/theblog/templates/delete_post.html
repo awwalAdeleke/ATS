@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Post{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    {% if user.id == post.author.id %}
+    <h1>Remove a Blog Post...</h1>
+    <br>
+    <br>
+    <h3>Remove: {{ post.title }}</h3>
+    <br>
+    <div class="form-group">
+        <form action="#" method="post">
+            {% csrf_token %}
+            <strong>Are you sure?!</strong><br><br>
+            <button class="btn btn-secondary" type="submit">Remove Post!</button>
+        </form>
+    </div>
+    {% else %}
+    <h1>You are not allowed here (and you know it!)</h1>
+    {% endif %}
+{% else %}
+    <h1>You are not allowed here and (you know it!)</h1>
+{% endif %}
+
+{% endblock %}

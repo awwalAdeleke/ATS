@@ -1,7 +1,6 @@
 .vscode
-Include/
-Lib/
-Scripts/
-*.cfg
-__pycache__
-__init__.py
+*.pyc
+virtual_envs/
+portfolio_project/
+blog/
+locallibrary/

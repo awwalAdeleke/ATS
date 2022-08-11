@@ -56,8 +56,6 @@ class Book(models.Model):
         return reverse("book-detail", args=[str(self.id)])  #type: ignore
 
     def __str__(self) -> str:
-        """Returns the URL to access a detail record for this book."""
-        # return reverse('book-detail', args=[str(self.id)])   # type: ignore
         return self.title
 
 

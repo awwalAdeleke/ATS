@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>Posts</h1>
+<ul> 
+    {% comment %} 
+    {% if user.is_authenticated %}
+        {% for post in post_list %}
+            {% if user.id == post.author.id %}
+                <li>
+                    <div class="jumbotron">
+                        <a href="{% url 'article-detail' post.pk %}">{{ post.title }}</a> | Category: <a href="{% url 'category' post.category|slugify %}">{{ post.category }}</a> | Author: {{ post.author.first_name }} {{ post.author.last_name }} | Published-date: {{ post.post_date }}<br>
+                        <small>
+
+                            <a href="{% url 'update_post' post.pk %}">(Edit)</a>
+
+                            {% if post.is_deleted %}
+                            <a href="{% url 'hide_post' post.pk %}">(Restore)</a>
+                            {% else %}
+                            <a href="{% url 'hide_post' post.pk %}">(Hide)</a>
+                            {% endif %}
+
+                        </small><br>
+                        {{ post.snippet }}
+                    </div>
+                </li>
+            {% elif user.id != post.author.id and post.is_deleted == False %}
+                <li>
+                    <div class="jumbotron">
+                        <a href="{% url 'article-detail' post.pk %}">{{ post.title }}</a> | Category: <a href="{% url 'category' post.category|slugify %}">{{ post.category }}</a> | Author: {{ post.author.first_name }} {{ post.author.last_name }} | Published-date: {{ post.post_date }}<br>
+                        {{ post.snippet }}
+                    </div>
+                </li>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        {% for post in active_posts %}
+            <li>
+                <div class="jumbotron">
+                    <a href="{% url 'article-detail' post.pk %}">{{ post.title }}</a> | Category: <a href="{% url 'category' post.category|slugify %}">{{ post.category }}</a> | Author: {{ post.author.first_name }} {{ post.author.last_name }} | Published-date: {{ post.post_date }}<br>
+
+                    {{ post.snippet }}
+                </div>
+            </li>
+        {% endfor %}
+
+    {% endif %}
+ {% endcomment %}
+
+{% for post in post_list %}
+<li>
+    <div class="jumbotron">
+        <a href="{% url 'article-detail' post.pk %}">
+            {{ post.title }}
+        </a>
+        | Category: 
+        <a href="{% url 'category' post.category|slugify %}">
+            {{ post.category }}
+        </a>
+        | Author: {{ post.author.first_name }} {{ post.author.last_name }}
+        | Published-date: {{ post.post_date }}<br>
+        <br>
+        {{ post.snippet }}
+    </div>
+</li>
+{% endfor %}
+
+</ul>
+
+
+
+
+{% endblock %}
+
+

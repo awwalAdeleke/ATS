@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>{% block title %}{{ post.title_tag }}{% endblock%}</title>
+
+{% block content %}
+    <h1>{{ post.title }}</h1>
+    <small>By: {{ post.author.first_name }} {{ post.author.last_name }} - {{ post.post_date }}
+        {% if user.is_authenticated %}
+
+            {% if user.id == post.author.id %}
+            <br><br><a class="btn btn-danger" href="{% url 'delete_post' post.pk %}">WARNING (Absolute Delete!)</a></small>
+            {% endif %}
+
+        {% endif %}
+    <hr>
+    <br>
+    
+    {% if post.header_image %}
+        <img src="{{ post.header_image.url }}" alt="Header Image" class="rounded", width=200 height=200><br><br>
+    {% endif %}
+
+    {{ post.body|safe }}
+
+    <br>
+    <br>
+    <br>
+    <div class="btn btn-group justify-content-between" style="width:100%; display:block;">
+        {% if user.is_authenticated %}
+
+            {% if user.id == post.author.id %}
+                <a class="btn btn-secondary" href="{% url 'update_post' post.pk %}">Edit</a>
+            {% endif %}
+
+        {% endif %}
+        <a href="{% url 'home' %}" class="btn btn-secondary">Home Page</a>
+    </div>
+    <br>
+
+
+    <div class="card mb-3">
+        <div class="row no-gutters">
+            <div class="col-md-2">
+                {% if post.author.profile.profile_pic %}
+                <img src="{{ post.author.profile.profile_pic.url }}" class="card-img" height=100%>
+                {% else %}
+                <img src="{% static 'theblog/images/user-profile-icon.jpg' %}" class="card-img" height=100%>
+                {% endif %}
+            </div>
+            <div class="col-md-10">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {{ post.author.first_name }}
+                        {{ post.author.last_name }}
+                    </h5>
+                    <p class="small text-muted">
+
+                        {% if post.author.profile %}
+                        <a href="{% url 'show_profile_page' post.author.profile.id %}">Go to profile</a>
+                        {% endif %}
+
+                        {% if post.author.profile.website_url %}
+                        | <a href="{{ post.author.profile.website_url }}">Website</a>
+                        {% endif %}
+
+                        {% if post.author.profile.facebook_url %}
+                        | <a href="{{ post.author.profile.facebook_url }}">Facebook</a>
+                        {% endif %}
+
+                        {% if post.author.profile.twitter_url %}
+                        | <a href="{{ post.author.profile.twitter_url }}">Twitter</a>
+                        {% endif %}
+
+                        {% if post.author.profile.instagram_url %}
+                        | <a href="{{ post.author.profile.instagram_url }}">Instagram</a>
+                        {% endif %}
+
+                        {% if post.author.profile.pinterest_url %}
+                        | <a href="{{ post.author.profile.pinterest_url }}">Pinterest</a>
+                        {% endif %}
+
+                    </p>
+
+                    {% if post.author.profile.bio %}
+                    <p class="card-text">{{ post.author.profile.bio }}</p>
+                    {% endif %}
+
+                    <p class="card-text"><small class="text-muted">Last updated by: {{ post.updated_date }}</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+
+    
+    <h2>Comments</h2>
+    {% for comment in comments %}
+        <strong>
+
+            {{ comment.name }} - {{ comment.date_added }}
+        </strong>
+        <br><br>
+
+        {{ comment.body }}
+
+        <br><br>
+
+        {% if user.is_authenticated and user.id == post.author.id %}
+        <form action="{% url 'delete_comment' comment.pk %}" method="post">
+            {% csrf_token %}
+            {% if comment.is_deleted %}
+            <input type="submit" class="btn btn-success" value="Restore">
+            {% else %}
+            <input type="submit" class="btn btn-danger" value="Hide">
+            {% endif %}
+        </form>
+        
+    {% endif %}
+        <hr>
+    {% empty %}
+    No comments yet... <a href="{% url 'add_comment' post.pk %}">Add one</a>
+    {% endfor %}
+        <br><br>
+    {% comment %} <h2>Deleted Comments...</h2>
+    {% for comment in post.comments.deleted_comments %}
+        <strong>
+
+            {{ comment.name }} - {{ comment.date_added }}
+
+        </strong>
+        <br><br>
+
+        {{ comment.body }}
+
+        <br><br>
+
+        <a class="btn btn-danger" href="{% url 'delete_comment' comment.pk %}">Restore</a>
+
+        <hr>
+        {% empty %}
+        No comments yet...
+        <br>
+        <br>
+    {% endfor %} {% endcomment %}
+
+{% comment %} 
+
+    {% else %}
+        <h2>Comments...</h2>
+        {% for comment in post.comments.active_comments %}
+            <strong>
+
+                {{ comment.name }} - {{ comment.date_added }}
+
+            </strong>
+
+            <br><br>
+
+            {{ comment.body }}
+
+            <br><br>
+            <hr>
+        {% empty %}
+        No comments yet... <a href="{% url 'add_comment' post.pk %}">Add one</a>
+        {% endfor %}
+
+        {% if post.comments.active_comments %}
+        <a href="{% url 'add_comment' post.pk %}">Add More</a>
+        {% endif %}
+
+        <br>
+        <br>
+    
+    {% endif %} {% endcomment %}
+
+
+{% endblock %}
+
